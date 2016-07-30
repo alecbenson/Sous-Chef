@@ -5,6 +5,10 @@ var cheerio = require('cheerio');
 var request = require('request');
 var winston = require('winston');
 
+var Recipes = require('./recipes');
+var Ingredients = require('./ingredients');
+var Directions = require('./directions');
+
 var scrapeDinnerPage = function (page) {
 	var dinnerPage = 'http://allrecipes.com/recipes/80/main-dish/?page=' + parseInt(page);
 	return grabRecipeLinks(dinnerPage);
@@ -52,49 +56,58 @@ var harvestRecipes = function (pages) {
 }
 
 var saveRecipe = function (url) {
-	return new Promise((resolve) => {
-		request(url, function (err, response, html) {
-			if (err) {
-				winston.log('error', 'Could not scrape ' + url + ' ' + err);
-			}
+	request(url, function (err, response, html) {
+		if (err) {
+			winston.log('error', 'Could not scrape ' + url + ' ' + err);
+		}
 
-			var $ = cheerio.load(html);
-			var title, ingredients, readyTime, directions, image, stars, reviews;
+		var $ = cheerio.load(html);
+		var title, readyTime, image, stars, reviews;
 
-			image = $('img[itemprop=image]').attr('src');
-			title = $('h1[itemprop=name]').text();
-			readyTime = $('span.ready-in-time').text();
-			stars = parseFloat($('div.rating-stars').data('ratingstars'));
-			reviews = parseInt($('span.review-count').text())
+		image = $('img[itemprop=image]').attr('src');
+		title = $('h1[itemprop=name]').text();
+		readyTime = $('span.ready-in-time').text();
+		stars = parseFloat($('div.rating-stars').data('ratingstars'));
+		reviews = parseInt($('span.review-count').text())
 
-			ingredients = [];
-			$('span[itemprop=ingredients]').each((i, elem) => {
-				ingredients.push($(elem).text());
-			})
-			directions = [];
-			$('span.recipe-directions__list--item').each((i, elem) => {
-				directions.push($(elem).text());
-			});
-
-			var recipe = {
-				title: title,
+		var promises = [];
+		$('span[itemprop=ingredients]').each((i, elem) => {
+			var ingredient = new Ingredients({
 				url: url,
-				image: image,
-				ingredients: ingredients,
-				readyTime: readyTime,
-				directions: directions,
-				stars: stars,
-				reviews: reviews
-			}
-			resolve(recipe);
+				name: $(elem).text()
+			});
+			promises.push(ingredient.save);
 		});
-	})
+
+		$('span.recipe-directions__list--item').each((i, elem) => {
+			var direction = new Directions({
+				url: url,
+				step: $(elem).text()
+			});
+			promises.push(direction.save);
+		});
+
+		var recipe = new Recipes({
+			url: url,
+			title: title,
+			image: image,
+			readyTime: readyTime,
+			stars: stars,
+			reviews: reviews
+		});
+		promises.push(recipe.save);
+		return Promise.all(promises);
+	});
 };
 
-var exportRecipes = function(pages) {
+var exportRecipes = function (pages) {
 	return harvestRecipes(pages).map((url) => {
 		return saveRecipe(url);
 	});
 }
+
+exportRecipes(1).then((r) => {
+	console.log(r);
+})
 
 module.exports = exportRecipes;

@@ -1,8 +1,8 @@
 'use strict';
 
+require('./recipes');
 const Bookshelf = require('../bookshelf');
 
-require('./recipes');
 var Ingredients = Bookshelf.Model.extend({
 	tableName: 'ingredients',
 	recipes: function () {

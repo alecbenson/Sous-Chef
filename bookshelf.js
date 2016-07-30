@@ -36,4 +36,4 @@ bookshelf.knex.schema.createTable('directions', function(table) {
 	table.timestamps();
 });
 
-module.exports = require('bookshelf')(knex);
+module.exports = bookshelf;

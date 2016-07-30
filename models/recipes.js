@@ -1,5 +1,7 @@
 'use strict';
 
+require('./ingredients');
+require('./directions');
 const Bookshelf = require('../bookshelf');
 
 var Recipes = Bookshelf.Model.extend({

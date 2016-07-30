@@ -1,11 +1,11 @@
 'use strict';
 
+require('./recipes');
 const Bookshelf = require('../bookshelf');
 
-require('./recipes');
 var Directions = Bookshelf.Model.extend({
 	tableName: 'directions',
-	recipe: function () {
+	recipes: function () {
 		return this.belongsTo('Recipes', 'url');
 	}
 });
