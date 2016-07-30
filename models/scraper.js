@@ -51,8 +51,39 @@ var harvestRecipes = function (pages) {
 	});
 }
 
-harvestRecipes(20).then((f) => {
-	console.log(f, f.length);
-});
+var saveRecipe = function (url) {
+	return new Promise((resolve) => {
+		request(url, function (err, response, html) {
+			if (err) {
+				winston.log('error', 'Could not scrape ' + url + ' ' + err);
+			}
+
+			var $ = cheerio.load(html);
+			var title, ingredients, readyTime, directions;
+
+			title = $('h1[itemprop=name]').text();
+			var ingredients = [];
+			$('span[itemprop=ingredients]').each((i, elem) => {
+				ingredients.push($(elem).text());
+			})
+			readyTime = $('span.ready-in-time').text();
+
+			directions = [];
+			$('span.recipe-directions__list--item').each((i, elem) => {
+				directions.push($(elem).text());
+			});
+
+			var recipe = {
+				title: title,
+				ingredients: ingredients,
+				readyTime: readyTime,
+				directions: directions
+			}
+			resolve(recipe);
+		});
+	})
+};
+
+saveRecipe('http://allrecipes.com/recipe/135799/chicken-breast-cutlets-with-artichokes-and-capers/');
 
 module.exports = {};
