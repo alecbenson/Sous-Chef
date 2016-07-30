@@ -1,13 +1,9 @@
 'use strict';
 
-const Promise = require('bluebird');
-const db = require('../db');
+const bookshelf = require('../bookshelf');
 
-module.exports = (param) => {
-	const title = param.title;
+var Recipe = bookshelf.Model.extend({
+	tableName: 'recipes'
+});
 
-	return Promise.using(db(), conn => {
-		const sql = 'insert into recipe (title) values(?)';
-		return conn.queryAsync(sql, [title]);
-	});
-};
+module.exports = Recipe;
