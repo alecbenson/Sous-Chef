@@ -1,0 +1,1 @@
+"use strict";angular.module("souschef",["angularBootstrapMaterial"]),angular.module("souschef").controller("navbarController",function($scope){$scope.title="Sous-Chef"});
