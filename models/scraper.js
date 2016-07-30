@@ -59,15 +59,16 @@ var saveRecipe = function (url) {
 			}
 
 			var $ = cheerio.load(html);
-			var title, ingredients, readyTime, directions;
+			var title, ingredients, readyTime, directions, image;
 
+			image = $('img[itemprop=image]').attr('src');
 			title = $('h1[itemprop=name]').text();
+			readyTime = $('span.ready-in-time').text();
+
 			var ingredients = [];
 			$('span[itemprop=ingredients]').each((i, elem) => {
 				ingredients.push($(elem).text());
 			})
-			readyTime = $('span.ready-in-time').text();
-
 			directions = [];
 			$('span.recipe-directions__list--item').each((i, elem) => {
 				directions.push($(elem).text());
@@ -75,6 +76,8 @@ var saveRecipe = function (url) {
 
 			var recipe = {
 				title: title,
+				url: url,
+				image: image,
 				ingredients: ingredients,
 				readyTime: readyTime,
 				directions: directions
