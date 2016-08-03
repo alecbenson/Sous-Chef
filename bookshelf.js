@@ -1,13 +1,12 @@
 'use strict'
 
 var config = require('./config.js');
+var winston = require('winston');
 
 var knex = require('knex')({
 	client: 'mysql',
 	connection: {
-		host: '127.0.0.1',
 		user: config.mysql_user,
-		password: config.mysql_db,
 		database: config.mysql_db
 	}
 });
@@ -15,25 +14,49 @@ var knex = require('knex')({
 var bookshelf = require('bookshelf')(knex);
 bookshelf.plugin('registry');
 
-
-bookshelf.knex.schema.createTable('recipes', function(table) {
-	table.string('url').primary();
-	table.string('title');
-	table.string('image');
-	table.string('readyTime');
-	table.integer('reviews');
-	table.float('stars');
+bookshelf.knex.schema.hasTable('recipes').then(function (exists) {
+	if (!exists) {
+		bookshelf.knex.schema.createTable('recipes', function (table) {
+			table.string('url').primary();
+			table.string('title');
+			table.string('image');
+			table.string('readyTime');
+			table.integer('reviews');
+			table.float('stars');
+		}).then(function () {
+			winston.info('recipes table created');
+		});
+	} else {
+		winston.info('ingredients table already exists, skipping creation');
+	}
 });
 
-bookshelf.knex.schema.createTable('ingredients', function(table) {
-	table.string('url').primary();
-	table.string('name');
+bookshelf.knex.schema.hasTable('ingredients').then(function (exists) {
+	if (!exists) {
+		bookshelf.knex.schema.createTable('ingredients', function (table) {
+			table.string('url');
+			table.string('name');
+		}).then(function () {
+			winston.info('ingredients table created');
+		});
+	} else {
+		winston.info('ingredients table already exists, skipping creation');
+	}
 });
 
-bookshelf.knex.schema.createTable('directions', function(table) {
-	table.string('url').primary();
-	table.increments('step');
-	table.timestamps();
+bookshelf.knex.schema.hasTable('directions').then(function (exists) {
+	if (!exists) {
+		bookshelf.knex.schema.createTable('directions', function (table) {
+			table.string('url');
+			table.string('step');
+			table.increments('count');
+			table.timestamps();
+		}).then(function () {
+			winston.info('directions table created');
+		});
+	} else {
+		winston.info('ingredients table already exists, skipping creation');
+	}
 });
 
 module.exports = bookshelf;

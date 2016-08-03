@@ -10,7 +10,7 @@ var Ingredients = require('./ingredients');
 var Directions = require('./directions');
 
 var scrapeDinnerPage = function (page) {
-	var dinnerPage = 'http://allrecipes.com/recipes/80/main-dish/?page=' + parseInt(page);
+	var dinnerPage = 'http://allrecipes.com/recipes/249/main-dish/casseroles/?page=' + parseInt(page);
 	return grabRecipeLinks(dinnerPage);
 }
 
@@ -76,7 +76,7 @@ var saveRecipe = function (url) {
 				url: url,
 				name: $(elem).text()
 			});
-			promises.push(ingredient.save);
+			promises.push(ingredient.save());
 		});
 
 		$('span.recipe-directions__list--item').each((i, elem) => {
@@ -84,7 +84,7 @@ var saveRecipe = function (url) {
 				url: url,
 				step: $(elem).text()
 			});
-			promises.push(direction.save);
+			promises.push(direction.save());
 		});
 
 		var recipe = new Recipes({
@@ -95,7 +95,8 @@ var saveRecipe = function (url) {
 			stars: stars,
 			reviews: reviews
 		});
-		promises.push(recipe.save);
+		promises.push(recipe.save());
+		winston.info('Scraping recipe: ' + title);
 		return Promise.all(promises);
 	});
 };
@@ -106,8 +107,7 @@ var exportRecipes = function (pages) {
 	});
 }
 
-exportRecipes(1).then((r) => {
-	console.log(r);
+exportRecipes(50).then((r) => {
 })
 
 module.exports = exportRecipes;
