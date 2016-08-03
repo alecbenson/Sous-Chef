@@ -1,0 +1,11 @@
+.card-block.col-md-6
+  .panel.panel-warning
+    .panel-heading
+      img.img-responsive(src='{{recipe.image}}', style='max-width: 300px; display: block; margin: auto')
+      h1.panel-title {{recipe.title}}
+    .panel-body
+      a.btn.btn-danger.btn-fab.btn-raised.btn-card.pull-right
+        i.material-icons restaurant
+      p.card-text {{recipe.stars}}.
+    footer.card-footer
+      button.btn.btn-flat.btn-danger() Remove

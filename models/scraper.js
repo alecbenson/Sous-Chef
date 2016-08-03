@@ -10,7 +10,7 @@ var Ingredients = require('./ingredients');
 var Directions = require('./directions');
 
 var scrapeDinnerPage = function (page) {
-	var dinnerPage = 'http://allrecipes.com/recipes/249/main-dish/casseroles/?page=' + parseInt(page);
+	var dinnerPage = 'http://allrecipes.com/recipes/17136/world-cuisine/asian/indian/main-dishes/?page=' + parseInt(page);
 	return grabRecipeLinks(dinnerPage);
 }
 
@@ -107,7 +107,6 @@ var exportRecipes = function (pages) {
 	});
 }
 
-exportRecipes(50).then((r) => {
-})
+exportRecipes(50).then();
 
 module.exports = exportRecipes;

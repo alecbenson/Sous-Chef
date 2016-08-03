@@ -59,4 +59,17 @@ bookshelf.knex.schema.hasTable('directions').then(function (exists) {
 	}
 });
 
+bookshelf.knex.schema.hasTable('weekview').then(function (exists) {
+	if (!exists) {
+		bookshelf.knex.schema.createTable('weekview', function (table) {
+			table.string('url');
+			table.integer('day');
+		}).then(function () {
+			winston.info('weekview table created');
+		});
+	} else {
+		winston.info('weekview table already exists, skipping creation');
+	}
+});
+
 module.exports = bookshelf;

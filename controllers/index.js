@@ -14,4 +14,7 @@ router.get('/', function (req, res) {
 	});
 });
 
+//recipes api
+router.use('/recipes', require('./recipes'));
+
 module.exports = router;
