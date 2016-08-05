@@ -19,6 +19,8 @@ bookshelf.knex.schema.hasTable('recipes').then(function (exists) {
 		bookshelf.knex.schema.createTable('recipes', function (table) {
 			table.string('url').primary();
 			table.string('title');
+			table.string('description');
+			table.string('notes');
 			table.string('image');
 			table.string('readyTime');
 			table.integer('reviews');

@@ -10,7 +10,7 @@ var Ingredients = require('./ingredients');
 var Directions = require('./directions');
 
 var scrapeDinnerPage = function (page) {
-	var dinnerPage = 'http://allrecipes.com/recipes/17136/world-cuisine/asian/indian/main-dishes/?page=' + parseInt(page);
+	var dinnerPage = 'http://allrecipes.com/recipes/17235/everyday-cooking/allrecipes-magazine-recipes/?page=' + parseInt(page);
 	return grabRecipeLinks(dinnerPage);
 }
 
@@ -62,10 +62,11 @@ var saveRecipe = function (url) {
 		}
 
 		var $ = cheerio.load(html);
-		var title, readyTime, image, stars, reviews;
+		var title, readyTime, image, stars, reviews, description;
 
 		image = $('img[itemprop=image]').attr('src');
 		title = $('h1[itemprop=name]').text();
+		description = $('div[itemprop=description]').text();
 		readyTime = $('span.ready-in-time').text();
 		stars = parseFloat($('div.rating-stars').data('ratingstars'));
 		reviews = parseInt($('span.review-count').text())
@@ -93,6 +94,7 @@ var saveRecipe = function (url) {
 			image: image,
 			readyTime: readyTime,
 			stars: stars,
+			description: description,
 			reviews: reviews
 		});
 		promises.push(recipe.save());
