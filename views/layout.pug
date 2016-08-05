@@ -11,14 +11,17 @@ html
 
   body(ng-app="souschef")
     block navbar
-      .navbar.navbar-warning(ng-controller="navbarController")
+      .navbar.navbar-danger(ng-controller="navbarController")
         .container-fluid
           .navbar-header
             button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-responsive-collapse')
               span.icon-bar
               span.icon-bar
               span.icon-bar
-            a.navbar-brand(href='/') Sous-Chef
+            a.navbar-brand(href='/')
+              span
+                img(style='max-width:30px', src='images/hat3.png')
+                |   Sous-Chef
           .navbar-collapse.collapse.navbar-responsive-collapse
             ul.nav.navbar-nav
               li
