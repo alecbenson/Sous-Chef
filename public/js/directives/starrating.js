@@ -3,9 +3,9 @@
 angular.module('souschef').directive('starRating', function () {
 	return {
 		link: link,
-		template: '<span ng-repeat="star in getFullStarCount(recipe.stars) track by $index"><i class="fa fa-star text-warning"></i></span>' +
+		template: '<h4><span ng-repeat="star in getFullStarCount(recipe.stars) track by $index"><i class="fa fa-star text-warning"></i></span>' +
 			'<span ng-repeat="star in getHalfStarCount(recipe.stars) track by $index"><i class="fa fa-star-half-o text-warning"></i></span>' +
-			'<span ng-repeat="star in getEmptyStarCount(recipe.stars) track by $index"><i class="fa fa-star-o text-warning"></i></span>'
+			'<span ng-repeat="star in getEmptyStarCount(recipe.stars) track by $index"><i class="fa fa-star-o text-warning"></i></span></h4>'
 	};
 
 	function link(scope) {
