@@ -17,7 +17,7 @@ angular.module('souschef').directive('starRating', function () {
 			return new Array(difference);
 		};
 		scope.getEmptyStarCount = function (stars) {
-			var difference = 5 - scope.getFullStarCount(stars).length - scope.getHalfStarCount(stars).length;
+			var difference = 5 - Math.round(stars);
 			return new Array(difference);
 		};
 	}
