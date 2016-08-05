@@ -3,7 +3,7 @@ extends layout
 block content
   div(ng-controller="weekViewController")
     .col-md-9
-      div(ng-repeat='recipe in weeklyRecipes')
+      .div(ng-repeat='recipe in weeklyRecipes')
         recipe-card
     .col-md-3
       refinements

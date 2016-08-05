@@ -3,8 +3,11 @@
     .panel-heading.panel-image(style='background: url({{recipe.image}});')
     .panel-body
       h3 {{recipe.title}}
+      star-rating
       a.btn.btn-danger.btn-fab.btn-raised.btn-card.pull-right
         i.material-icons restaurant
+      br
+      br
       p.card-text {{recipe.description}}.
     footer.card-footer
       button.btn.btn-flat.btn-danger() Remove
