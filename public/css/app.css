@@ -11,6 +11,22 @@
   margin-top: -100px;
 }
 html, body {
-  font-family: 'Roboto';
   background-color: #eeeeee !important;
+}
+
+* {
+  font-family: 'Roboto';
+  font-weight: 300 !important;
+}
+.s24 {
+  font-size:24px;
+}
+.danger {
+  color: #F44336
+}
+.warn {
+  color: #FF8F00;
+}
+.bland {
+  color: gray;
 }

@@ -1,17 +1,20 @@
 md-card(md-whiteframe="5")
   md-toolbar
     div.md-toolbar-tools
-      h5 Refinements
+      h5 Priorities
   md-card-content
     h3 Number of Stars
     div(layout)
       div(flex="10", layout, layout-align="center center")
-      md-slider(flex, md-discrete, ng-model="starPriority", step="1", min="1", max="5")
+      md-slider(flex, md-discrete, ng-model="refinements.stars", step="1", min="1", max="5")
     h3 Ingredient Efficiency
     div(layout)
       div(flex="10", layout, layout-align="center center")
-      md-slider(flex, md-discrete, ng-model="starPriority", step="1", min="1", max="5")
-    h3 Number of Stars
+      md-slider(flex, md-discrete, ng-model="refinements.efficiency", step="1", min="1", max="5")
+    h3 Preparation Time
     div(layout)
       div(flex="10", layout, layout-align="center center")
-      md-slider(flex, md-discrete, ng-model="starPriority", step="1", min="1", max="5")
+      md-slider(flex, md-discrete, ng-model="refinements.preptime", step="1", min="1", max="5")
+    md-card-actions(layout="row", layout-align="end center")
+      md-button.md-primary.md-raised
+        | Apply

@@ -1,10 +1,10 @@
 extends layout
 
 block content
-  div(ng-controller="weekViewController")
-    div(layout="row" layout-xs="column")
-      div(flex="50" layout="column")
-        md-grid-list
-        div(ng-repeat='recipe in weeklyRecipes')
+  div(layout-padding, ng-controller="weekViewController")
+    div(layout="row")
+      div.md-padding.recipeList(flex="70")
+        .recipe(ng-repeat='recipe in weeklyRecipes')
           recipe-card
-      refinements(flex="50")
+      div.md-padding(flex="30")
+        refinements

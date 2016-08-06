@@ -1,7 +1,11 @@
-md-card(md-whiteframe="5")
+md-card.recipe(md-whiteframe="5")
   md-card-title-media.panel-image(style="background-image: url({{recipe.image}})")
-  md-card-title-text
-    span.md-headline {{recipe.title}}
+  md-card-title
+    md-card-title-text
+      span.md-headline {{recipe.title}}
   md-card-content
     star-rating
     p {{recipe.description}}
+    md-card-actions(layout="row", layout-align="end center")
+      md-button.md-icon-button
+        i.s24.fa.fa-heart.bland

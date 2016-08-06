@@ -1,1 +1,44 @@
-.panel-image{background-size:cover !important;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-repeat:no-repeat !important;background-position:center !important;height:200px}.btn.btn-fab.btn-card{margin-top:-100px}html,body{font-family:'Roboto';background-color:#eee !important}
+.panel-image {
+  background-size: cover !important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  height: 200px;
+}
+.btn.btn-fab.btn-card {
+  margin-top: -100px;
+}
+html, body {
+  background-color: #eeeeee !important;
+}
+
+* {
+  font-family: 'Roboto';
+  font-weight: 300 !important;
+}
+.s24 {
+  font-size:24px;
+}
+.danger {
+  color: #F44336
+}
+.warn {
+  color: #FF8F00;
+}
+.bland {
+  color: gray;
+}
+.recipeList {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px;
+  margin-top: -10px;
+}
+.recipe {
+  flex: 1 0 600px;
+  box-sizing: border-box;
+	margin-left: 10px;
+	margin-top: 10px;
+}
