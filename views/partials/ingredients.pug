@@ -1,0 +1,13 @@
+md-card(md-whiteframe="5")
+  md-toolbar
+    div.md-toolbar-tools
+      h5 Ingredients
+  md-card-content
+    div(ng-if="!ingredients.length")
+      h2 Somehow it seems that none of these recipes have ingredients!
+    md-list-item(ng-repeat="ingredient in ingredients")
+      p {{ingredient.quantity}} {{ingredient.name}}
+      md-checkbox.md-secondary(ng-model="ingredient.export")
+    md-card-actions(layout="row", layout-align="end center")
+      md-button.md-primary.md-raised(ng-disabled="!ingredients.length")
+        | Export
