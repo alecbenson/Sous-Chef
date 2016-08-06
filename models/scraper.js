@@ -95,7 +95,9 @@ var saveRecipe = function (url) {
 			readyTime: readyTime,
 			stars: stars,
 			description: description,
-			reviews: reviews
+			reviews: reviews,
+			madeCount: 0,
+			notes: ''
 		});
 		promises.push(recipe.save());
 		winston.info('Scraping recipe: ' + title);

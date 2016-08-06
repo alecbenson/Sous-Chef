@@ -25,6 +25,7 @@ bookshelf.knex.schema.hasTable('recipes').then(function (exists) {
 			table.string('readyTime');
 			table.integer('reviews');
 			table.float('stars');
+			table.integer('madeCount');
 		}).then(function () {
 			winston.info('recipes table created');
 		});

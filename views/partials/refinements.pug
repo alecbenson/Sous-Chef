@@ -1,7 +1,17 @@
-.panel.panel-danger
-  .panel-heading
-    .panel-title Refinements
-  .panel-body
-    p.card-text {{recipe.description}}.
-  footer.card-footer
-    button.btn.btn-flat.btn-info() Apply
+md-card(md-whiteframe="5")
+  md-toolbar
+    div.md-toolbar-tools
+      h5 Refinements
+  md-card-content
+    h3 Number of Stars
+    div(layout)
+      div(flex="10", layout, layout-align="center center")
+      md-slider(flex, md-discrete, ng-model="starPriority", step="1", min="1", max="5")
+    h3 Ingredient Efficiency
+    div(layout)
+      div(flex="10", layout, layout-align="center center")
+      md-slider(flex, md-discrete, ng-model="starPriority", step="1", min="1", max="5")
+    h3 Number of Stars
+    div(layout)
+      div(flex="10", layout, layout-align="center center")
+      md-slider(flex, md-discrete, ng-model="starPriority", step="1", min="1", max="5")

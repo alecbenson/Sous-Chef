@@ -1,11 +1,7 @@
-.card-block.col-md-6
-  .panel.panel-warning
-    .panel-heading.panel-image(style='background: url({{recipe.image}});')
-    .panel-body
-      h3 {{recipe.title}}
-      star-rating
-      a.btn.btn-danger.btn-fab.btn-raised.btn-card.pull-right
-        i.material-icons restaurant
-      p.card-text {{recipe.description}}.
-    footer.card-footer
-      button.btn.btn-flat.btn-danger() Remove
+md-card(md-whiteframe="5")
+  md-card-title-media.panel-image(style="background-image: url({{recipe.image}})")
+  md-card-title-text
+    span.md-headline {{recipe.title}}
+  md-card-content
+    star-rating
+    p {{recipe.description}}

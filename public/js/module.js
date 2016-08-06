@@ -1,3 +1,9 @@
 'use strict';
 
-angular.module('souschef', ['angularBootstrapMaterial']);
+angular.module('souschef', ['ngMaterial'])
+	.config(function ($mdThemingProvider) {
+		$mdThemingProvider.theme('default')
+			.primaryPalette('red')
+			.accentPalette('amber')
+      .backgroundPalette('grey');
+	});

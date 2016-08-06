@@ -2,8 +2,9 @@ extends layout
 
 block content
   div(ng-controller="weekViewController")
-    .col-md-9
-      .div(ng-repeat='recipe in weeklyRecipes')
-        recipe-card
-    .col-md-3
-      refinements
+    div(layout="row" layout-xs="column")
+      div(flex="50" layout="column")
+        md-grid-list
+        div(ng-repeat='recipe in weeklyRecipes')
+          recipe-card
+      refinements(flex="50")

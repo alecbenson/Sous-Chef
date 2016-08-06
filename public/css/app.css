@@ -10,3 +10,7 @@
 .btn.btn-fab.btn-card {
   margin-top: -100px;
 }
+html, body {
+  font-family: 'Roboto';
+  background-color: #eeeeee !important;
+}
