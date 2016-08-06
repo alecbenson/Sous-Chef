@@ -13,6 +13,7 @@ var knex = require('knex')({
 
 var bookshelf = require('bookshelf')(knex);
 bookshelf.plugin('registry');
+bookshelf.plugin('virtuals')
 
 bookshelf.knex.schema.hasTable('recipes').then(function (exists) {
 	if (!exists) {
@@ -62,16 +63,19 @@ bookshelf.knex.schema.hasTable('directions').then(function (exists) {
 	}
 });
 
-bookshelf.knex.schema.hasTable('weekview').then(function (exists) {
+bookshelf.knex.schema.hasTable('refinements').then(function (exists) {
 	if (!exists) {
-		bookshelf.knex.schema.createTable('weekview', function (table) {
-			table.string('url');
-			table.integer('day');
+		bookshelf.knex.schema.createTable('refinements', function (table) {
+			table.integer('id').primary();
+			table.integer('stars');
+			table.integer('efficiency');
+			table.integer('preptime');
+			table.integer('somethingnew');
 		}).then(function () {
-			winston.info('weekview table created');
+			winston.info('refinements table created');
 		});
 	} else {
-		winston.info('weekview table already exists, skipping creation');
+		winston.info('refinements table already exists, skipping creation');
 	}
 });
 

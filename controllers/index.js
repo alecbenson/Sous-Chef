@@ -17,4 +17,6 @@ router.get('/', function (req, res) {
 //recipes api
 router.use('/recipes', require('./recipes'));
 
+router.use('/refinements', require('./refinements'));
+
 module.exports = router;

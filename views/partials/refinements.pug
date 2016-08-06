@@ -15,6 +15,10 @@ md-card(md-whiteframe="5")
     div(layout)
       div(flex="10", layout, layout-align="center center")
       md-slider(flex, md-discrete, ng-model="refinements.preptime", step="1", min="1", max="5")
+    h3 Something New
+    div(layout)
+      div(flex="10", layout, layout-align="center center")
+      md-slider(flex, md-discrete, ng-model="refinements.somethingnew", step="1", min="1", max="5")
     md-card-actions(layout="row", layout-align="end center")
-      md-button.md-primary.md-raised
+      md-button.md-primary.md-raised(ng-click="saveRefinements()")
         | Apply

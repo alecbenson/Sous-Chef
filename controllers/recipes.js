@@ -21,4 +21,18 @@ router.get('/:limit', function (req, res) {
 		})
 });
 
+//TODO:
+/*
+router.get('/:mainCourse', function (req, res) {
+	//var refinements = req.params.refinements;
+	RecipesCollection.forge()
+		.query(function (qb) {
+			qb.orderBy('score', 'DESC');
+		})
+		.fetchOne().then(function (result) {
+			res.json(result);
+		})
+});
+*/
+
 module.exports = router;
