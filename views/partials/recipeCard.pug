@@ -7,5 +7,11 @@ md-card.recipe(md-whiteframe="5")
     star-rating
     p {{recipe.description}}
     md-card-actions(layout="row", layout-align="end center")
+      md-button.md-primary.md-raised
+        i.s24.material-icons restaurant
+        md-tooltip(md-direction="left")
+          | Show Recipe
       md-button.md-icon-button
         i.s24.fa.fa-heart.bland
+        md-tooltip(md-direction="top")
+          | Favorite

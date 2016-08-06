@@ -3,9 +3,9 @@ angular.module('souschef')
 	.controller('weekViewController', function ($scope, $http) {
 
 		$scope.refinements = {
-			stars: 1,
-			efficiency: 1,
-			preptime: 1
+			stars: 2,
+			efficiency: 2,
+			preptime: 2
 		};
 
 		//Retrieve weekly recipes
