@@ -10,7 +10,7 @@ var Ingredients = require('./ingredients');
 var Directions = require('./directions');
 
 var scrapeDinnerPage = function (page) {
-	var dinnerPage = 'http://allrecipes.com/recipes/17235/everyday-cooking/allrecipes-magazine-recipes/?page=' + parseInt(page);
+	var dinnerPage = 'http://allrecipes.com/recipes/80/main-dish/?page=' + parseInt(page);
 	return grabRecipeLinks(dinnerPage);
 }
 
@@ -56,16 +56,25 @@ var harvestRecipes = function (pages) {
 }
 
 var parseReadyTime = function (timestring) {
+	var result = 0;
+	var dayIndex = timestring.indexOf('d');
 	var hourIndex = timestring.indexOf('h');
+	var minuteIndex = timestring.indexOf('m');
+	var lastIndex = 0;
 
-	if (hourIndex === -1) {
-		var result = 0;
-		//no hours
-		result = parseInt(timestring);
-	} else {
-		var hours = parseInt(timestring.substring(0, hourIndex).replace(/\D/g, ''));
-		var minutes = parseInt(timestring.substring(hourIndex).replace(/\D/g, ''));
-		result = (hours * 60) + minutes
+	if (dayIndex !== -1) {
+		var days = parseInt(timestring.substring(0, dayIndex).replace(/\D/g, ''));
+		lastIndex = dayIndex;
+		result += 24 * 60 * days;
+	}
+	if (hourIndex !== -1) {
+		var hours = parseInt(timestring.substring(lastIndex, hourIndex).replace(/\D/g, ''));
+		lastIndex = hourIndex;
+		result += hours * 60;
+	}
+	if (minuteIndex !== -1) {
+		var minutes = parseInt(timestring.substring(lastIndex, minuteIndex).replace(/\D/g, ''));
+		result += minutes
 	}
 	return result;
 }
