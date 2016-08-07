@@ -23,7 +23,7 @@ bookshelf.knex.schema.hasTable('recipes').then(function (exists) {
 			table.string('description');
 			table.string('notes');
 			table.string('image');
-			table.string('readyTime');
+			table.integer('readyTime');
 			table.integer('reviews');
 			table.float('stars');
 			table.integer('madeCount');
@@ -69,8 +69,9 @@ bookshelf.knex.schema.hasTable('refinements').then(function (exists) {
 			table.integer('id').primary();
 			table.integer('stars');
 			table.integer('efficiency');
-			table.integer('preptime');
-			table.integer('somethingnew');
+			table.integer('readyTime');
+			table.integer('madeCount');
+			table.integer('reviews');
 		}).then(function () {
 			winston.info('refinements table created');
 		});

@@ -1,24 +1,53 @@
 md-card(md-whiteframe="5")
   md-toolbar
     div.md-toolbar-tools
-      h5 Priorities
+      h3 Priorities
   md-card-content
-    h3 Number of Stars
+    //STARS
+    h3.md-body-2 Number of Stars
     div(layout)
-      div(flex="10", layout, layout-align="center center")
-      md-slider(flex, md-discrete, ng-model="refinements.stars", step="1", min="1", max="5")
-    h3 Ingredient Efficiency
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Poorly Rated
+      md-slider(flex, md-discrete, ng-model="refinements.stars", step="1", min="-5", max="5")
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Highly Rated
+    
+    //REVIEWS
+    h3.md-body-2 Number of Reviews
     div(layout)
-      div(flex="10", layout, layout-align="center center")
-      md-slider(flex, md-discrete, ng-model="refinements.efficiency", step="1", min="1", max="5")
-    h3 Preparation Time
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Few Reviews
+      md-slider(flex, md-discrete, ng-model="refinements.reviews", step="1", min="-5", max="5")
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Many Reviews
+        
+    //EFFICIENCY
+    h3.md-body-2 Ingredient Efficiency
     div(layout)
-      div(flex="10", layout, layout-align="center center")
-      md-slider(flex, md-discrete, ng-model="refinements.preptime", step="1", min="1", max="5")
-    h3 Something New
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Diverse
+      md-slider(flex, md-discrete, ng-model="refinements.efficiency", step="1", min="-5", max="5")
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Efficient
+        
+    //PREP TIME
+    h3.md-body-2 Preparation Time
     div(layout)
-      div(flex="10", layout, layout-align="center center")
-      md-slider(flex, md-discrete, ng-model="refinements.somethingnew", step="1", min="1", max="5")
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Short Prep
+      md-slider(flex, md-discrete, ng-model="refinements.readyTime", step="1", min="-5", max="5")
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Long Prep
+        
+    //FAMILIARITY
+    h3.md-body-2 Familiarity
+    div(layout)
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Something Familiar
+      md-slider(flex, md-discrete, ng-model="refinements.madeCount", step="1", min="-5", max="5")
+      div(flex="15", layout, layout-align="center center")
+        span.md-body-1 Something New        
+      
     md-card-actions(layout="row", layout-align="end center")
-      md-button.md-primary.md-raised(ng-click="saveRefinements()")
+      md-button.md-primary.md-raised(ng-click="updateList()")
         | Apply

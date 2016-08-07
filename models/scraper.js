@@ -55,6 +55,21 @@ var harvestRecipes = function (pages) {
 	});
 }
 
+var parseReadyTime = function (timestring) {
+	var hourIndex = timestring.indexOf('h');
+
+	if (hourIndex === -1) {
+		var result = 0;
+		//no hours
+		result = parseInt(timestring);
+	} else {
+		var hours = parseInt(timestring.substring(0, hourIndex).replace(/\D/g, ''));
+		var minutes = parseInt(timestring.substring(hourIndex).replace(/\D/g, ''));
+		result = (hours * 60) + minutes
+	}
+	return result;
+}
+
 var saveRecipe = function (url) {
 	request(url, function (err, response, html) {
 		if (err) {
@@ -67,7 +82,7 @@ var saveRecipe = function (url) {
 		image = $('img[itemprop=image]').attr('src');
 		title = $('h1[itemprop=name]').text();
 		description = $('div[itemprop=description]').text();
-		readyTime = $('span.ready-in-time').text();
+		readyTime = parseReadyTime($('span.ready-in-time').text());
 		stars = parseFloat($('div.rating-stars').data('ratingstars'));
 		reviews = parseInt($('span.review-count').text())
 
@@ -111,6 +126,8 @@ var exportRecipes = function (pages) {
 	});
 }
 
-exportRecipes(50).then();
+exportRecipes(50).then(() => {
+	console.log('done');
+});
 
 module.exports = exportRecipes;

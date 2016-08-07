@@ -25,8 +25,9 @@ router.post('/', function (req, res) {
 	var refinements = {
 		stars: req.body.stars,
 		efficiency: req.body.efficiency,
-		somethingnew: req.body.somethingnew,
-		preptime: req.body.preptime
+		madeCount: req.body.madeCount,
+		readyTime: req.body.readyTime,
+		reviews: req.body.reviews
 	};
 
 	//Why the fuck is an upsert so hard, EW GROSS GROSS GROSS I DON'T LIKE IT

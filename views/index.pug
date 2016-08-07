@@ -1,11 +1,11 @@
 extends layout
 
 block content
-  div(layout-padding, ng-controller="weekViewController")
+  div(ng-controller="contentController")
     div(layout="row")
       div.md-padding.recipeList(flex="70")
         .recipe(ng-repeat='recipe in weeklyRecipes')
           recipe-card
-      div.md-padding(flex="30")
+      div.md-padding(flex="30", layout-padding)
         refinements
         ingredients
