@@ -40,14 +40,14 @@ var Recipes = Bookshelf.Model.extend({
 	},
 	relatedRecipes: function (id) {
 		/*
-		SELECT t2.recipe_id
+		SELECT t2.recipe_id, SUM(CASE WHEN t1.name IS NOT NULL THEN 1 ELSE 0 END) AS matches
 		FROM ingredient_relations t1
 		RIGHT JOIN ingredient_relations t2
-		    ON t1.name = t2.name AND
-		       t1.recipe_id = 1
+		ON t1.name = t2.name
+		AND t1.recipe_id = 1
 		WHERE t2.recipe_id <> 1
 		GROUP BY t2.recipe_id
-		ORDER BY t2.recipe_id
+		ORDER BY matches desc;
 		*/
 		return new Promise((resolve, reject) => {
 			let countScore = Bookshelf.knex.raw('SUM(CASE WHEN t1.name IS NOT NULL THEN 1 ELSE 0 END) AS matches')
@@ -59,7 +59,7 @@ var Recipes = Bookshelf.Model.extend({
 				})
 				.where('t2.recipe_id', '<>', id) //WHERE t2.recipe_id <> 1
 				.groupBy('t2.recipe_id') //GROUP BY t2.recipe_id
-				.orderBy('t2.recipe_id') //ORDER BY t2.recipe_id
+				.orderBy('matches', 'desc') //ORDER BY t2.recipe_id
 				.then((results) => {
 					resolve(results);
 				})
