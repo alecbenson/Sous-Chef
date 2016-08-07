@@ -26,10 +26,18 @@ router.get('/ingredients/:id', function (req, res) {
 	})
 });
 
-//select * from recipes as a order by score(a.stars, a.reviews, a.madeCount, a.readyTime) desc;
 router.get('/sorted/:limit', function (req, res) {
 	var limit = parseInt(req.params.limit) || 7;
 	Recipes.forge().scoredRecipes(limit).then(function (results) {
+		res.json(results);
+	}).catch(function () {
+		res.sendStatus(500);
+	});
+});
+
+router.get('/related/:id', function (req, res) {
+	var id = parseInt(req.params.id);
+	Recipes.forge().relatedRecipes(id).then(function (results) {
 		res.json(results);
 	}).catch(function () {
 		res.sendStatus(500);

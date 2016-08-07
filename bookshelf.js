@@ -80,4 +80,18 @@ bookshelf.knex.schema.hasTable('refinements').then(function (exists) {
 	}
 });
 
+bookshelf.knex.schema.hasTable('ingredient_relations').then(function (exists) {
+	if (!exists) {
+		bookshelf.knex.schema.createTable('ingredient_relations', function (table) {
+			table.increments().primary();
+			table.integer('recipe_id').unsigned().references('recipes.id');
+			table.string('name');
+		}).then(function () {
+			winston.info('ingredient_relations table created');
+		});
+	} else {
+		winston.info('ingredient_relations table already exists, skipping creation');
+	}
+});
+
 module.exports = bookshelf;
