@@ -26,9 +26,9 @@ angular.module('souschef')
 				})
 		}
 
-		//Retrieve sorted recipes
+		//Retrieve scored recipes
 		var getSortedRecipes = function () {
-			$http.get('/recipes/sorted/10').success(function (result) {
+			$http.get('/recipes/scored/anchor/10').success(function (result) {
 				$scope.weeklyRecipes = result;
 			});
 		}

@@ -180,7 +180,7 @@ var exportRecipes = function (pages) {
 	});
 }
 
-exportRecipes(1).then(() => {
+exportRecipes(50).then(() => {
 	console.log('done');
 });
 
