@@ -1,5 +1,3 @@
-DROP FUNCTION score;
-
 DELIMITER $$
 CREATE FUNCTION score(stars FLOAT, reviews INT, madecount INT, readyTime INT) RETURNS FLOAT
 BEGIN

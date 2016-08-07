@@ -18,7 +18,7 @@ bookshelf.knex.schema.hasTable('recipes').then(function (exists) {
 	if (!exists) {
 		bookshelf.knex.schema.createTable('recipes', function (table) {
 			table.increments().primary();
-			table.string('url');
+			table.string('url').unique();
 			table.string('title');
 			table.string('description');
 			table.string('notes');
@@ -38,7 +38,7 @@ bookshelf.knex.schema.hasTable('recipes').then(function (exists) {
 bookshelf.knex.schema.hasTable('ingredients').then(function (exists) {
 	if (!exists) {
 		bookshelf.knex.schema.createTable('ingredients', function (table) {
-			table.integer('recipes_id').unsigned().references('recipes.id');
+			table.integer('recipe_id').unsigned().references('recipes.id');
 			table.increments().primary();
 			table.string('name');
 		}).then(function () {
@@ -52,10 +52,9 @@ bookshelf.knex.schema.hasTable('ingredients').then(function (exists) {
 bookshelf.knex.schema.hasTable('directions').then(function (exists) {
 	if (!exists) {
 		bookshelf.knex.schema.createTable('directions', function (table) {
-			table.integer('recipes_id').unsigned().references('recipes.id');
+			table.integer('recipe_id').unsigned().references('recipes.id');
 			table.increments().primary();
 			table.string('step');
-			table.timestamps();
 		}).then(function () {
 			winston.info('directions table created');
 		});
@@ -67,7 +66,7 @@ bookshelf.knex.schema.hasTable('directions').then(function (exists) {
 bookshelf.knex.schema.hasTable('refinements').then(function (exists) {
 	if (!exists) {
 		bookshelf.knex.schema.createTable('refinements', function (table) {
-			table.increments().primary();
+			table.integer('id').primary();
 			table.integer('stars');
 			table.integer('efficiency');
 			table.integer('readyTime');

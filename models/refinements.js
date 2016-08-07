@@ -6,4 +6,4 @@ var Refinements = Bookshelf.Model.extend({
 	tableName: 'refinements'
 });
 
-module.exports = Bookshelf.model('Weekview', Refinements);
+module.exports = Bookshelf.model('Refinements', Refinements);

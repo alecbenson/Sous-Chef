@@ -5,12 +5,12 @@ var cheerio = require('cheerio');
 var request = require('request');
 var winston = require('winston');
 
-var Recipes = require('./recipes');
-var Ingredients = require('./ingredients');
-var Directions = require('./directions');
+var Recipes = require('../models/recipes');
+var Ingredients = require('../models/ingredients');
+var Directions = require('../models/directions');
 
 var scrapeDinnerPage = function (page) {
-	var dinnerPage = 'http://allrecipes.com/recipes/94/soups-stews-and-chili/?page=' + parseInt(page);
+	var dinnerPage = 'http://allrecipes.com/recipes/80/main-dish/?page=' + parseInt(page);
 	return grabRecipeLinks(dinnerPage);
 }
 
@@ -112,7 +112,7 @@ var saveRecipe = function (url) {
 			var promises = [];
 			$('span[itemprop=ingredients]').each((i, elem) => {
 				var ingredient = new Ingredients({
-					recipes_id: model.id,
+					recipe_id: model.id,
 					name: $(elem).text()
 				});
 				promises.push(ingredient.save());
@@ -120,7 +120,7 @@ var saveRecipe = function (url) {
 
 			$('span.recipe-directions__list--item').each((i, elem) => {
 				var direction = new Directions({
-					recipes_id: model.id,
+					recipe_id: model.id,
 					step: $(elem).text()
 				});
 				promises.push(direction.save());

@@ -1,6 +1,5 @@
 'use strict';
 
-var RecipesCollection = require('../collections/recipeCollection');
 var Recipes = require('../models/recipes');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -18,10 +17,19 @@ router.get('/id/:id', function (req, res) {
 	})
 });
 
+router.get('/ingredients/:id', function (req, res) {
+	var id = parseInt(req.params.id);
+	new Recipes({
+		id: id
+	}).related('ingredients').fetch().then(function (result) {
+		res.json(result);
+	})
+});
+
 //select * from recipes as a order by score(a.stars, a.reviews, a.madeCount, a.readyTime) desc;
 router.get('/sorted/:limit', function (req, res) {
 	var limit = parseInt(req.params.limit) || 7;
-	RecipesCollection.forge().sortedRecipes(limit).then(function (results) {
+	Recipes.forge().scoredRecipes(limit).then(function (results) {
 		res.json(results);
 	}).catch(function () {
 		res.sendStatus(500);
