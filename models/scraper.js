@@ -10,7 +10,7 @@ var Ingredients = require('./ingredients');
 var Directions = require('./directions');
 
 var scrapeDinnerPage = function (page) {
-	var dinnerPage = 'http://allrecipes.com/recipes/80/main-dish/?page=' + parseInt(page);
+	var dinnerPage = 'http://allrecipes.com/recipes/94/soups-stews-and-chili/?page=' + parseInt(page);
 	return grabRecipeLinks(dinnerPage);
 }
 
@@ -95,23 +95,7 @@ var saveRecipe = function (url) {
 		stars = parseFloat($('div.rating-stars').data('ratingstars'));
 		reviews = parseInt($('span.review-count').text())
 
-		var promises = [];
-		$('span[itemprop=ingredients]').each((i, elem) => {
-			var ingredient = new Ingredients({
-				url: url,
-				name: $(elem).text()
-			});
-			promises.push(ingredient.save());
-		});
-
-		$('span.recipe-directions__list--item').each((i, elem) => {
-			var direction = new Directions({
-				url: url,
-				step: $(elem).text()
-			});
-			promises.push(direction.save());
-		});
-
+		winston.info('Scraping recipe: ' + title);
 		var recipe = new Recipes({
 			url: url,
 			title: title,
@@ -123,9 +107,26 @@ var saveRecipe = function (url) {
 			madeCount: 0,
 			notes: ''
 		});
-		promises.push(recipe.save());
-		winston.info('Scraping recipe: ' + title);
-		return Promise.all(promises);
+
+		return recipe.save().then(function (model) {
+			var promises = [];
+			$('span[itemprop=ingredients]').each((i, elem) => {
+				var ingredient = new Ingredients({
+					recipes_id: model.id,
+					name: $(elem).text()
+				});
+				promises.push(ingredient.save());
+			});
+
+			$('span.recipe-directions__list--item').each((i, elem) => {
+				var direction = new Directions({
+					recipes_id: model.id,
+					step: $(elem).text()
+				});
+				promises.push(direction.save());
+			});
+			return Promise.all(promises);
+		});
 	});
 };
 
@@ -135,7 +136,7 @@ var exportRecipes = function (pages) {
 	});
 }
 
-exportRecipes(50).then(() => {
+exportRecipes(1).then(() => {
 	console.log('done');
 });
 
