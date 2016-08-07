@@ -5,7 +5,6 @@ angular.module('souschef')
 		var initRefinements = function () {
 			$http.get('/refinements').success(function (refinements) {
 				if (!refinements) {
-					console.log('NO REFINEMENTS!!!!!!!');
 					$scope.refinements = {
 						stars: 0,
 						efficiency: 0,

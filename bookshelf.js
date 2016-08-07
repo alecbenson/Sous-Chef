@@ -13,12 +13,12 @@ var knex = require('knex')({
 
 var bookshelf = require('bookshelf')(knex);
 bookshelf.plugin('registry');
-bookshelf.plugin('virtuals')
 
 bookshelf.knex.schema.hasTable('recipes').then(function (exists) {
 	if (!exists) {
 		bookshelf.knex.schema.createTable('recipes', function (table) {
-			table.string('url').primary();
+			table.increments().primary();
+			table.string('url').unique();
 			table.string('title');
 			table.string('description');
 			table.string('notes');
@@ -38,7 +38,8 @@ bookshelf.knex.schema.hasTable('recipes').then(function (exists) {
 bookshelf.knex.schema.hasTable('ingredients').then(function (exists) {
 	if (!exists) {
 		bookshelf.knex.schema.createTable('ingredients', function (table) {
-			table.string('url');
+			table.integer('recipe_id').unsigned().references('recipes.id');
+			table.increments().primary();
 			table.string('name');
 		}).then(function () {
 			winston.info('ingredients table created');
@@ -51,10 +52,9 @@ bookshelf.knex.schema.hasTable('ingredients').then(function (exists) {
 bookshelf.knex.schema.hasTable('directions').then(function (exists) {
 	if (!exists) {
 		bookshelf.knex.schema.createTable('directions', function (table) {
-			table.string('url');
+			table.integer('recipe_id').unsigned().references('recipes.id');
+			table.increments().primary();
 			table.string('step');
-			table.increments('count');
-			table.timestamps();
 		}).then(function () {
 			winston.info('directions table created');
 		});
