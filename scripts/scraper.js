@@ -8,6 +8,7 @@ var winston = require('winston');
 var Recipes = require('../models/recipes');
 var Ingredients = require('../models/ingredients');
 var Directions = require('../models/directions');
+var Ingredient_Relations = require('../models/ingredient_relations');
 
 var scrapeDinnerPage = function (page) {
 	var dinnerPage = 'http://allrecipes.com/recipes/80/main-dish/?page=' + parseInt(page);
@@ -53,6 +54,34 @@ var harvestRecipes = function (pages) {
 		}
 		return Object.keys(unique);
 	});
+}
+
+var grabCoreIngredients = function (ingredientLine) {
+	//Keywords that we are not interested in storing in ingredient_relations
+	var filterWords = ['cup', 'cups', 'chop', 'chopped', 'dice', 'diced', 'salt', 'pepper', 'oz',
+			'ounce', 'ounces', 'tsp', 'tsps', 'teaspoon', 'teaspoons', 'tbs', 'tablespoon',
+			'tablespoons', 'slice', 'slices', 'sliced', 'softened', 'thin', 'thinly', 'gallon', 'gallons',
+			'finely', 'grate', 'grated', 'taste', 'large', 'medium', 'small', 'dried', 'extra',
+			'seasoned', 'seasoning', 'such', 'as', 'or', 'to', 'and', 'dash', 'sauce', 'sea', 'virgin',
+			'cubed', 'cubes', 'halves', 'divide', 'divided', 'lightly', 'beaten', 'shredded', 'round',
+			'peel', 'peeled', 'pinch', 'inch', 'needed', 'dry', 'jar', 'box', 'drain', 'drained',
+			'fresh', 'water', 'crush', 'crushed', 'mince', 'minced', 'seeded', 'lengthwise', 'can',
+			'for', 'topping', 'more'
+		]
+		//Lowercase, a-z only.
+	var alphaOnly = ingredientLine.toLowerCase().replace(/[^a-z ]/g, '').trim();
+	//Split on words
+	var split = alphaOnly.split(' ');
+	var i = split.length;
+	//Iterate in reverse to prevent splicing from wrecking indexes
+	while (i--) {
+		var word = split[i];
+		if (filterWords.indexOf(word) !== -1) {
+			//Pull the unwanted words out
+			split.splice(i, 1);
+		}
+	}
+	return split;
 }
 
 var parseReadyTime = function (timestring) {
@@ -110,12 +139,24 @@ var saveRecipe = function (url) {
 
 		return recipe.save().then(function (model) {
 			var promises = [];
+			//Store each ingredient line so we can display the full recipe
 			$('span[itemprop=ingredients]').each((i, elem) => {
+				var ingredientLine = $(elem).text();
 				var ingredient = new Ingredients({
 					recipe_id: model.id,
-					name: $(elem).text()
+					name: ingredientLine
 				});
 				promises.push(ingredient.save());
+				var coreIngredients = grabCoreIngredients(ingredientLine);
+
+				//Store core ingredients that belong to a recipe in a separate table
+				for (let ing of coreIngredients) {
+					var ingRelation = new Ingredient_Relations({
+						recipe_id: model.id,
+						name: ing
+					});
+					promises.push(ingRelation.save());
+				}
 			});
 
 			$('span.recipe-directions__list--item').each((i, elem) => {

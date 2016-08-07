@@ -50,8 +50,9 @@ var Recipes = Bookshelf.Model.extend({
 		ORDER BY t2.recipe_id
 		*/
 		return new Promise((resolve, reject) => {
+			let countScore = Bookshelf.knex.raw('SUM(CASE WHEN t1.name IS NOT NULL THEN 1 ELSE 0 END) AS matches')
 			Bookshelf.knex
-				.select('t2.recipe_id') //SELECT t2.recipe_id
+				.select('t2.recipe_id', countScore) //SELECT t2.recipe_id
 				.from('ingredient_relations as t1') //FROM ingredient_relations t1
 				.rightJoin('ingredient_relations as t2', function () { //RIGHT JOIN ingredient_relations t2
 					this.on('t1.name', '=', 't2.name').andOn('t1.recipe_id', '=', id) //ON t1.name = t2.name AND t1.recipe_id = 1
