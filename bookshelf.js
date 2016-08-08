@@ -67,11 +67,11 @@ bookshelf.knex.schema.hasTable('refinements').then(function (exists) {
 	if (!exists) {
 		bookshelf.knex.schema.createTable('refinements', function (table) {
 			table.integer('id').primary();
-			table.integer('stars');
-			table.integer('efficiency');
-			table.integer('readyTime');
-			table.integer('madeCount');
-			table.integer('reviews');
+			table.float('stars');
+			table.float('efficiency');
+			table.float('readyTime');
+			table.float('madeCount');
+			table.float('reviews');
 		}).then(function () {
 			winston.info('refinements table created');
 		});

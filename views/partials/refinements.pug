@@ -8,7 +8,7 @@ md-card(md-whiteframe="5")
     div(layout)
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Poorly Rated
-      md-slider(flex, md-discrete, ng-model="refinements.stars", step="1", min="-5", max="5")
+      md-slider(flex, md-discrete, ng-model="refinements.stars", step="0.1", min="-1", max="1")
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Highly Rated
     
@@ -17,7 +17,7 @@ md-card(md-whiteframe="5")
     div(layout)
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Few Reviews
-      md-slider(flex, md-discrete, ng-model="refinements.reviews", step="1", min="-5", max="5")
+      md-slider(flex, md-discrete, ng-model="refinements.reviews", step="0.1", min="-1", max="1")
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Many Reviews
         
@@ -26,7 +26,7 @@ md-card(md-whiteframe="5")
     div(layout)
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Diverse
-      md-slider(flex, md-discrete, ng-model="refinements.efficiency", step="1", min="-5", max="5")
+      md-slider(flex, md-discrete, ng-model="refinements.efficiency", step="0.1", min="-1", max="1")
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Efficient
         
@@ -35,7 +35,7 @@ md-card(md-whiteframe="5")
     div(layout)
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Short Prep
-      md-slider(flex, md-discrete, ng-model="refinements.readyTime", step="1", min="-5", max="5")
+      md-slider(flex, md-discrete, ng-model="refinements.readyTime", step="0.1", min="-1", max="1")
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Long Prep
         
@@ -44,7 +44,7 @@ md-card(md-whiteframe="5")
     div(layout)
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Something Familiar
-      md-slider(flex, md-discrete, ng-model="refinements.madeCount", step="1", min="-5", max="5")
+      md-slider(flex, md-discrete, ng-model="refinements.madeCount", step="0.1", min="-1", max="1")
       div(flex="15", layout, layout-align="center center")
         span.md-body-1 Something New        
       

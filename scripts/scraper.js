@@ -108,7 +108,8 @@ var parseReadyTime = function (timestring) {
 		var minutes = parseInt(timestring.substring(lastIndex, minuteIndex).replace(/\D/g, ''));
 		result += minutes
 	}
-	return result;
+	//default to 45 if the recipe has no time or something went wrong
+	return result || 45;
 }
 
 var saveRecipe = function (url) {

@@ -21,6 +21,7 @@ var scoredRecipesByAnchor = function (limit) {
 			console.log('Could not determine anchor recipe');
 			return [];
 		}
+
 		var anchorId = anchor[0].id;
 		return Bookshelf.knex
 			.select('*')
