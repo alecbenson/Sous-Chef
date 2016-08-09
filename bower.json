@@ -24,7 +24,8 @@
     "font-awesome": "fontawesome#^4.6.3",
     "angular-material": "^1.0.9",
     "angular": "^1.5.7",
-    "prettify-min": "^1.0.4"
+    "prettify-min": "^1.0.4",
+    "angular-dragula": "^1.2.7"
   },
   "overrides": {
     "font-awesome": {

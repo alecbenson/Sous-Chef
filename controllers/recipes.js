@@ -26,18 +26,20 @@ router.get('/ingredients/:id', function (req, res) {
 	})
 });
 
-router.get('/scored/noanchor/:limit', function (req, res) {
+router.get('/scored/noanchor/:limit/:page?', function (req, res) {
 	var limit = parseInt(req.params.limit) || 7;
-	Recipes.forge().scoredRecipes(limit).then(function (results) {
+	var page = parseInt(req.params.page) || 0;
+	Recipes.forge().scoredRecipes(limit, page).then(function (results) {
 		res.json(results);
 	}).catch(function () {
 		res.sendStatus(500);
 	});
 });
 
-router.get('/scored/anchor/:limit', function (req, res) {
+router.get('/scored/anchor/:limit/:page?', function (req, res) {
 	var limit = parseInt(req.params.limit) || 7;
-	Recipes.forge().scoredRecipesByAnchor(limit).then(function (results) {
+	var page = parseInt(req.params.page) || 0;
+	Recipes.forge().scoredRecipesByAnchor(limit, offset).then(function (results) {
 		res.json(results);
 	}).catch(function () {
 		res.sendStatus(500);

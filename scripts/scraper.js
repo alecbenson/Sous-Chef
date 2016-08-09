@@ -69,7 +69,8 @@ var grabCoreIngredients = function (ingredientLine) {
 			'for', 'topping', 'more', 'ground', 'crumbled', 'pound', 'pounds', 'powder', 'cold', 'black',
 			'juice', 'frozen', 'diluted', 'undiluted', 'of', 'condensed', 'optional', 'cut', 'into', 'chunks',
 			'sprig', 'sprigs', 'pot', 'stalk', 'stalks', 'paste', 'cooked', 'baked', 'unbaked', 'casing', 'long',
-			'seeds', 'seed', 'pounded', 'mix', 'jars'
+			'seeds', 'seed', 'pounded', 'mix', 'jars', 'melted', 'uncooked', 'rinsed', 'broken', 'matchsticks',
+			'bunch', 'in', 'trimmed','bitesize'
 		]
 		//Lowercase, a-z only.
 	var alphaOnly = ingredientLine.toLowerCase().replace(/[^a-z ]/g, '').trim();

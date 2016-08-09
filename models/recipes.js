@@ -4,18 +4,27 @@ require('./ingredients');
 require('./directions');
 const Bookshelf = require('../bookshelf');
 
-var scoredRecipes = function (limit) {
+var scoredRecipes = function (limit, offset) {
 	//select * from recipes as a
 	//order by score(a.stars, a.reviews, a.madeCount, a.readyTime) desc
 	//limit *;
+	offset = offset || 0;
+	if(limit > 50) {
+		limit = 50;
+	}
 	return Bookshelf.knex
 		.select('*')
 		.table('recipes as a')
 		.joinRaw('ORDER BY scoreWithoutAnchor(a.id) desc')
-		.limit(limit);
+		.limit(limit)
+		.offset(offset);
 }
 
-var scoredRecipesByAnchor = function (limit) {
+var scoredRecipesByAnchor = function (limit, offset) {
+	offset = offset || 0;
+	if(limit > 50) {
+		limit = 50;
+	}
 	return scoredRecipes(1).then((anchor) => {
 		if (!anchor) {
 			console.log('Could not determine anchor recipe');
@@ -27,7 +36,8 @@ var scoredRecipesByAnchor = function (limit) {
 			.select('*')
 			.table('recipes as a')
 			.joinRaw('ORDER BY scoreWithAnchor(' + anchorId + ', a.id) desc') //Eh.... I know.
-			.limit(limit);
+			.limit(limit)
+			.offset(offset);
 	})
 }
 
@@ -80,11 +90,11 @@ var Recipes = Bookshelf.Model.extend({
 		});
 	},
 	//Scores recipes simply by priorities, nothing else.
-	scoredRecipes: function (limit) {
-		return scoredRecipes(limit);
+	scoredRecipes: function (limit, offset) {
+		return scoredRecipes(limit, offset);
 	},
-	scoredRecipesByAnchor: function (limit) {
-		return scoredRecipesByAnchor(limit);
+	scoredRecipesByAnchor: function (limit, offset) {
+		return scoredRecipesByAnchor(limit, offset);
 	},
 	relatedRecipes: function (id) {
 		return relatedRecipes(id);
