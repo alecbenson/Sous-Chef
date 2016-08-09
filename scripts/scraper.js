@@ -4,6 +4,8 @@ var Promise = require('bluebird');
 var cheerio = require('cheerio');
 var request = require('request');
 var winston = require('winston');
+var natural = require('natural');
+natural.PorterStemmer.attach();
 
 var Recipes = require('../models/recipes');
 var Ingredients = require('../models/ingredients');
@@ -57,29 +59,26 @@ var harvestRecipes = function (pages) {
 }
 
 var grabCoreIngredients = function (ingredientLine) {
-	//Keywords that we are not interested in storing in ingredient_relations
-	var filterWords = ['cup', 'cups', 'chop', 'chopped', 'dice', 'diced', 'salt', 'pepper', 'oz',
-			'ounce', 'ounces', 'tsp', 'tsps', 'teaspoon', 'teaspoons', 'tbs', 'tablespoon',
-			'tablespoons', 'slice', 'slices', 'sliced', 'softened', 'thin', 'thinly', 'gallon', 'gallons',
-			'finely', 'grate', 'grated', 'taste', 'large', 'medium', 'small', 'dried', 'extra',
-			'seasoned', 'seasoning', 'such', 'as', 'or', 'to', 'and', 'dash', 'sauce', 'sea', 'virgin',
-			'cubed', 'cubes', 'halves', 'divide', 'divided', 'lightly', 'beaten', 'shredded', 'round',
-			'peel', 'peeled', 'pinch', 'inch', 'needed', 'dry', 'jar', 'box', 'drain', 'drained',
-			'fresh', 'water', 'crush', 'crushed', 'mince', 'minced', 'seeded', 'lengthwise', 'can',
-			'for', 'topping', 'more', 'ground', 'crumbled', 'pound', 'pounds', 'powder', 'cold', 'black',
-			'juice', 'frozen', 'diluted', 'undiluted', 'of', 'condensed', 'optional', 'cut', 'into', 'chunks',
-			'sprig', 'sprigs', 'pot', 'stalk', 'stalks', 'paste', 'cooked', 'baked', 'unbaked', 'casing', 'long',
-			'seeds', 'seed', 'pounded', 'mix', 'jars'
-		]
-		//Lowercase, a-z only.
+	var stemTrie = new natural.Trie();
+	stemTrie.addStrings(['cup', 'chop', 'dice', 'salt', 'oz', 'ounc', 'tsp', 'teaspoon', 'tb',
+		'tablespoon', 'slice', 'soften', 'thin', 'thinli', 'gallon', 'fine', 'grate', 'tast',
+		'larg', 'medium', 'small', 'dri', 'extra', 'season', 'dash', 'sauc', 'sea', 'virgin',
+		'cube', 'halv', 'divid', 'lightli', 'beaten', 'shred', 'round', 'peel', 'pinch', 'inch',
+		'need', 'dry', 'jar', 'box', 'drain', 'fresh', 'water', 'crush', 'minc', 'seed', 'lengthwi',
+		'top', 'ground', 'crumbl', 'pound', 'powder', 'cold', 'black', 'juic', 'frozen', 'dilut',
+		'undilut', 'conden', 'option', 'cut', 'chunk', 'sprig', 'pot', 'stalk', 'past', 'cook',
+		'bake', 'unbak', 'case', 'long', 'mix', 'melt', 'uncook', 'rin', 'broken', 'matchstick',
+		'bunch', 'trim', 'bite'
+	]);
+	//Lowercase, a-z only.
 	var alphaOnly = ingredientLine.toLowerCase().replace(/[^a-z ]/g, '').trim();
 	//Split on words
-	var split = alphaOnly.split(' ');
+	var split = alphaOnly.tokenizeAndStem();
 	var i = split.length;
 	//Iterate in reverse to prevent splicing from wrecking indexes
 	while (i--) {
 		var word = split[i];
-		if (filterWords.indexOf(word) !== -1) {
+		if (stemTrie.contains(word)) {
 			//Pull the unwanted words out
 			split.splice(i, 1);
 		}
