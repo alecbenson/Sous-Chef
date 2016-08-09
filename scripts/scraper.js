@@ -59,6 +59,7 @@ var harvestRecipes = function (pages) {
 }
 
 var grabCoreIngredients = function (ingredientLine) {
+	var resultMap = {};
 	var stemTrie = new natural.Trie();
 	stemTrie.addStrings(['cup', 'chop', 'dice', 'salt', 'oz', 'ounc', 'tsp', 'teaspoon', 'tb',
 		'tablespoon', 'slice', 'soften', 'thin', 'thinli', 'gallon', 'fine', 'grate', 'tast',
@@ -74,16 +75,14 @@ var grabCoreIngredients = function (ingredientLine) {
 	var alphaOnly = ingredientLine.toLowerCase().replace(/[^a-z ]/g, '').trim();
 	//Split on words
 	var split = alphaOnly.tokenizeAndStem();
-	var i = split.length;
 	//Iterate in reverse to prevent splicing from wrecking indexes
-	while (i--) {
-		var word = split[i];
-		if (stemTrie.contains(word)) {
-			//Pull the unwanted words out
-			split.splice(i, 1);
+	for (let word of split) {
+		if (!stemTrie.contains(word)) {
+			resultMap[word] = 0;
 		}
 	}
-	return split;
+	//Extract unique items from map
+	return Object.keys(resultMap);
 }
 
 var parseReadyTime = function (timestring) {
