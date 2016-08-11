@@ -2,9 +2,9 @@ extends layout
 
 block content
   div(ng-controller="contentController")
-    div(layout="row")
-      div.md-padding.recipeList(flex="70")
-        .recipe(ng-repeat='recipe in weeklyRecipes')
+    md-content(layout="row")
+      md-virtual-repeat-container.md-padding.recipeList(id="vertical-container", flex="70")
+        div.repeated-item(md-virtual-repeat="recipe in recipeItems", md-on-demand)
           recipe-card
       div.md-padding(flex="30", layout-padding)
         refinements
