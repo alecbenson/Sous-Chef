@@ -1,0 +1,5 @@
+div(layout="row")
+  div(ng-repeat="day in days", flex, ng-if='dragging')
+    md-card.day-box
+      md-card-content
+        div(layout-align="center center") {{day}}

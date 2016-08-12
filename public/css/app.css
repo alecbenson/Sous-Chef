@@ -45,3 +45,12 @@ html, body {
 	margin-left: 10px;
 	margin-top: 10px;
 }
+.day-box {
+  border-style: dashed;
+  border-width: medium;
+  border-color: #D3D3D3;
+  color: gray;
+  text-align: center;
+  margin: 4px;
+  border-radius: 5px;
+}

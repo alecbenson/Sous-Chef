@@ -35,6 +35,7 @@
     "should": "^10.0.0"
   },
   "dependencies": {
+    "angular-dragula": "^1.2.7",
     "babel": "^6.5.2",
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.0",
