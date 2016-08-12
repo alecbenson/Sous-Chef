@@ -21,6 +21,9 @@ html, body {
 .s24 {
   font-size:24px;
 }
+.s48 {
+  font-size:48px;
+}
 .danger {
   color: #F44336
 }

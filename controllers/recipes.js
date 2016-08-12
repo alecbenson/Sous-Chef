@@ -26,22 +26,25 @@ router.get('/ingredients/:id', function (req, res) {
 	})
 });
 
-router.get('/scored/noanchor/:limit/:offset?', function (req, res) {
+router.get('/scored/noanchor/:limit/:offset?/:like?', function (req, res) {
 	var limit = parseInt(req.params.limit) || 7;
 	var offset = parseInt(req.params.offset) || 0;
-	Recipes.forge().scoredRecipes(limit, offset).then(function (results) {
+	var like = req.params.like || '';
+	Recipes.forge().scoredRecipes(limit, offset, like).then(function (results) {
 		res.json(results);
 	}).catch(function () {
 		res.sendStatus(500);
 	});
 });
 
-router.get('/scored/anchor/:limit/:offset?', function (req, res) {
+router.get('/scored/anchor/:limit/:offset?/:like?', function (req, res) {
 	var limit = parseInt(req.params.limit) || 7;
 	var offset = parseInt(req.params.offset) || 0;
-	Recipes.forge().scoredRecipesByAnchor(limit, offset).then(function (results) {
+	var like = req.params.like || '';
+	Recipes.forge().scoredRecipesByAnchor(limit, offset, like).then(function (results) {
 		res.json(results);
-	}).catch(function () {
+	}).catch(function (err) {
+		console.log(err);
 		res.sendStatus(500);
 	});
 });

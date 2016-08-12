@@ -1,6 +1,7 @@
 'use strict';
 angular.module('souschef')
 	.controller('contentController', function ($scope, $http) {
+		$scope.filterText = '';
 
 		var initRefinements = function () {
 			$http.get('/refinements').success(function (refinements) {
@@ -28,7 +29,7 @@ angular.module('souschef')
 
 		//Retrieve scored recipes
 		var getSortedRecipes = function () {
-			$http.get('/recipes/scored/anchor/10').success(function (result) {
+			$http.get('/recipes/scored/anchor/10/0/' + encodeURIComponent($scope.filterText)).success(function (result) {
 				$scope.weeklyRecipes = result;
 			});
 		}
@@ -38,6 +39,10 @@ angular.module('souschef')
 			$scope.saveRefinements();
 			getSortedRecipes();
 		}
+
+		$scope.$watch('filterText', function() {
+			getSortedRecipes();
+		});
 
 		initRefinements();
 		getSortedRecipes();
